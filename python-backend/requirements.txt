@@ -2,3 +2,5 @@ Flask
 python-dotenv
 crewai
 langchain-google-genai
+google-cloud-vision
+

@@ -3,6 +3,9 @@ from flask import Blueprint, request, jsonify
 from crewai import Agent
 from langchain_google_genai import GoogleGenerativeAI
 from app.config import Config
+from app.features.content_moderation import moderate_content
+
+
 
 app = Blueprint('app', __name__)
 
@@ -40,3 +43,20 @@ def assign_task():
         return jsonify({"result": result}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+
+@app.route('/check-content', methods=['POST'])
+def check_content():
+    # Get content from the request
+    data = request.json
+    title = data.get('title')
+    description = data.get('description')
+    image_url = data.get('image_url', None)
+
+    if not title or not description:
+        return jsonify({"error": "Title and Description are required"}), 400
+
+    # Call the content moderation function
+    moderation_result = moderate_content(title, description, image_url)
+
+    return jsonify(moderation_result), 200
