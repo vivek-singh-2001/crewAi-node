@@ -3,4 +3,4 @@ python-dotenv
 crewai
 langchain-google-genai
 google-cloud-vision
-
+flask_cors

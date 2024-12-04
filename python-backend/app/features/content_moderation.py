@@ -1,5 +1,12 @@
 from langchain_google_genai import GoogleGenerativeAI
 from app.config import Config
+import os
+from flask import Flask, request, jsonify
+# from PIL import Image
+
+# Define the folder where your images are stored
+# UPLOAD_FOLDER = '/home/vivek/Pictures/Screenshots/'
+
 # from app.features.image_moderation import moderate_image
 
 # Initialize the AI client (Google's Gemini model)
@@ -18,9 +25,11 @@ def moderate_content(title, description, image_url=None):
         if "yes" in result.lower():
             return {"status": "inappropriate", "message": "Title or Description is inappropriate"}
 
-        # If image moderation is enabled, check the image only if image_url is provided
+        # # If image moderation is enabled, check the image only if image_url is provided
         # if image_url:
-        #     image_result = moderate_image(image_url)
+        #     image_path = os.path.join(UPLOAD_FOLDER, image_url)
+
+        #     image_result = moderate_image(image_path)
         #     if image_result["status"] == "inappropriate":
         #         return image_result  # Return image moderation result if inappropriate
 
