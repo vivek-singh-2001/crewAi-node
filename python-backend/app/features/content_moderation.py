@@ -12,6 +12,7 @@ def moderate_content(title, description, image_url=None):
 
     try:
         result = llm.predict(prompt)
+        print(result)
         # Check if the AI model detects inappropriate content in title and description
          # Check if the AI model returns 'yes' for inappropriate content
         if "yes" in result.lower():

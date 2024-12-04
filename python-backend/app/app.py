@@ -1,12 +1,18 @@
 # app/app.py
 from flask import Flask, request, jsonify
 from crewai import Agent
+from flask_cors import CORS
 from langchain_google_genai import GoogleGenerativeAI
 from crewai_tools import SerperDevTool
 from .config import Config
 
 app = Flask(__name__)
 app.config.from_object(Config)
+
+# Enable CORS for all routes
+CORS(app, supports_credentials=True)
+# CORS(app)
+
 
 llm = GoogleGenerativeAI(model="gemini-pro", google_api_key=app.config['GOOGLE_API_KEY'])
 

@@ -1,6 +1,7 @@
 # app/routes.py
 from flask import Blueprint, request, jsonify
 from crewai import Agent
+from flask_cors import cross_origin
 from langchain_google_genai import GoogleGenerativeAI
 from app.config import Config
 from app.features.content_moderation import moderate_content
@@ -46,12 +47,16 @@ def assign_task():
 
 
 @app.route('/check-content', methods=['POST'])
+@cross_origin(origin='localhost', headers=['Content-Type', 'Authorization'])
 def check_content():
     # Get content from the request
+    
+
     data = request.json
+    print(data)
     title = data.get('title')
     description = data.get('description')
-    image_url = data.get('image_url', None)
+    image_url = request.get('image_url', None)
 
     if not title or not description:
         return jsonify({"error": "Title and Description are required"}), 400
